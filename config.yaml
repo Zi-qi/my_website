@@ -1,6 +1,6 @@
 baseURL: https://ziqi-website.netlify.app/
 languageCode: en-us
-title: Forty
+title: Ziqi
 theme: forty
 googleAnalytics: ''
 disqusShortname: ''
@@ -35,7 +35,7 @@ params:
     text: Please visit [this page](/)
   favicon: favicon.ico
   footer:
-    copyright: Company Name
+    copyright: Ziqi Li
     enable: yes
     quicklinks:
       - alt: HTML5 UP
@@ -58,7 +58,7 @@ params:
         label: LinkedIn
         url: https://www.linkedin.com/in/ziqi-li-0b7012173/
   image: ''
-  name: Your name
+  name: Ziqi Li
   navigation:
     button1:
       - name: Get Started
