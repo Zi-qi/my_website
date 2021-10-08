@@ -10,7 +10,7 @@ params:
     subtitle: |-
       A RESPONSIVE SITE TEMPLATE DESIGNED BY HTML5 UP
       AND RELEASED UNDER THE CREATIVE COMMONS.
-    title: Hi, my name is Ziqi Li
+    title: Hi, my name is Ziqi
   blog: {}
   contact:
     address:
@@ -83,12 +83,12 @@ params:
     showcase:
       - image: lbs.jpg
         subtitle: A short biography
-        title: About me
+        title: Hi, this is Ziqi
         url: blogs/aliquam
       - image: pic02.jpg
         subtitle: Feugiat Amet Tempus
-        title: Tempus
-        url: blogs/tempus
+        title: Risk Return of DJIA Industrial Average
+        url: blogs/risk_return
       - image: pic03.jpg
         subtitle: Lorem Etiam Nullam
         title: Magna
