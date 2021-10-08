@@ -1,6 +1,6 @@
 baseURL: https://ziqi-website.netlify.app/
 languageCode: en-us
-title: Ziqi
+title: Portfolio website for Ziqi
 theme: forty
 googleAnalytics: ''
 disqusShortname: ''
@@ -14,14 +14,14 @@ params:
   blog: {}
   contact:
     address:
-      - city: City, ST 00000
+      - city: London
         country: Country
         street: Street
         title: Address
     buttonClear: Clear
     buttonSend: Send message
     email:
-      - email: zli.mfa2022@london.edu
+      - email: ziqi.gz@gmail.com
         title: Email
     enable: yes
     phone:
@@ -29,7 +29,7 @@ params:
         title: Phone
   custom_css: []
   custom_js: []
-  description: Your description
+  description: Student at London Business School
   error404:
     heading: Page couldn't be found
     text: Please visit [this page](/)
@@ -57,7 +57,7 @@ params:
       - icon: fa-linkedin
         label: LinkedIn
         url: https://www.linkedin.com/in/ziqi-li-0b7012173/
-  image: ''
+  image: Ziqi's background photo.jpg
   name: Ziqi Li
   navigation:
     button1:
@@ -81,9 +81,9 @@ params:
   tiles:
     enable: yes
     showcase:
-      - image: lbs.jpg
-        subtitle: A short biography
-        title: Hi, this is Ziqi
+      - image: Ziqi's Photo.jpg
+        subtitle: PROFESSIONAL RESUME
+        title: Ziqi's CV
         url: blogs/aliquam
       - image: pic02.jpg
         subtitle: Feugiat Amet Tempus
