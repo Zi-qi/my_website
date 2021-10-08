@@ -8,16 +8,15 @@ params:
   banner:
     buttonText: Get Started
     subtitle: |-
-      A RESPONSIVE SITE TEMPLATE DESIGNED BY HTML5 UP
-      AND RELEASED UNDER THE CREATIVE COMMONS.
+      Student at London Business School
     title: Hi, my name is Ziqi
   blog: {}
-  contact:
+  contact:+44 7848859506
     address:
-      - city: London
-        country: Country
-        street: Street
-        title: Address
+    Regent's Park
+    London 
+    United Kingdom
+    NW1 4SA
     buttonClear: Clear
     buttonSend: Send message
     email:
