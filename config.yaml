@@ -84,21 +84,21 @@ params:
         subtitle: PROFESSIONAL RESUME
         title: Ziqi's CV
         url: blogs/aliquam
-      - image: pic02.jpg
+      - image: stock_photo.jpg
         subtitle: Feugiat Amet Tempus
         title: Risk Return of DJIA Industrial Average
         url: blogs/risk_return
       - image: pic03.jpg
-        subtitle: Lorem Etiam Nullam
-        title: Magna
+        subtitle: ZIQI’S BACHELOR DISSERTATION
+        title: An Empirical Study of German American Bancorp’s Acquisition of River Valley Bancorp
         url: blogs/magna
-      - image: pic04.jpg
-        subtitle: Nisl Sed Aliquam
-        title: Ipsum
+      - image: exchange_photo.jpg
+        subtitle: ZIQI’S TRAVEL BLOGS IN AUSTRALIA
+        title: Manchester on the Road
         url: blogs/ipsum
       - image: pic05.jpg
-        subtitle: Ipsum Dolor Sit Amet
-        title: Consequat
+        subtitle: SHOULD I BUY?
+        title: A Stock Pitch for LVMH
         url: blogs/ipsum
       - image: pic06.jpg
         subtitle: Feugiat Amet Tempus
@@ -107,11 +107,7 @@ params:
   two:
     buttonText: Get Started
     enable: yes
-    subtitle: "Nullam et orci eu lorem consequat tincidunt vivamus et sagittis libero.
-      \n    Mauris aliquet magna magna sed nunc rhoncus pharetra. \n    Pellentesque
-      condimentum sem. In efficitur ligula tate urna. Maecenas laoreet massa vel lacinia
-      pellentesque lorem ipsum dolor. \n    Nullam et orci eu lorem consequat tincidunt.
-      Vivamus et sagittis libero.\n    Mauris aliquet magna magna sed nunc rhoncus
-      amet pharetra et feugiat tempus."
-    title: Massa libero
+    subtitle: "A student at London Business School, a corporate brain analyst, a trusted partner to colleagues, a confidant to friends
+I'm a dreamer and a doer, who wants to hit the financial markets and travel the world."
+    title: Ziqi's Intro
     url: blogs
