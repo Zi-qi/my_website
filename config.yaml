@@ -9,7 +9,7 @@ params:
     buttonText: Get Started
     subtitle: |-
       Student at London Business School
-    title: Hi, my name is Ziqi
+    title: Hi, this is Ziqi
   blog: {}
   contact:+44 7848859506
     address:
@@ -24,7 +24,7 @@ params:
         title: Email
     enable: yes
     phone:
-      - phone: (000) 000-0000 x1234
+      - phone: +44 7848859506
         title: Phone
   custom_css: []
   custom_js: []
