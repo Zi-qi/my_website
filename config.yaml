@@ -12,12 +12,12 @@ params:
       
     title: Hi there, it's Ziqi
   blog: {}
-  contact:+44 7848859506
+  contact:
     address:
      - city: London
        country: United Kingdom
        street: Regents Park
-      title: NW1 5AH
+       title: Address
     buttonClear: Clear
     buttonSend: Send message
     email:
