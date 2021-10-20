@@ -84,7 +84,7 @@ params:
       - image: Ziqi's Photo.jpg
         subtitle: PROFESSIONAL RESUME
         title: Ziqi's CV
-        url: blogs/aliquam
+        url: blogs/CV_Ziqi_Li_copy.pdf
       - image: stock_photo.jpg
         subtitle: Feugiat Amet Tempus
         title: Risk Return of DJIA Industrial Average
@@ -102,7 +102,7 @@ params:
         title: A Stock Pitch for LVMH
         url: blogs/ipsum
       - image: exchange_photo.jpg
-        subtitle: ZIQI’S TRAVEL BLOGS IN AUSTRALIA
+        subtitle: ZIQI’S TRAVEL JOURNAL IN AUSTRALIA
         title: Manchester on the Road
         url: https://manchesterontheroad.com/2020/08/13/chapter-three-places-to-visit-in-canberra/
   two:
