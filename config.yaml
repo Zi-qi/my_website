@@ -9,10 +9,12 @@ params:
     buttonText: Get Started
     subtitle: |-
       Student at London Business School
-    title: Hi, this is Ziqi
+      
+    title: Hi there, it's Ziqi
   blog: {}
   contact:+44 7848859506
     address:
+     - city:
     Regent's Park
     London 
     United Kingdom
@@ -97,7 +99,7 @@ params:
         title: Manchester on the Road
         url: blogs/ipsum
       - image: pic05.jpg
-        subtitle: SHOULD I BUY?
+        subtitle: SHOULD I BUY NOW?
         title: A Stock Pitch for LVMH
         url: blogs/ipsum
       - image: pic06.jpg
