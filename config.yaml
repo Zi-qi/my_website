@@ -89,7 +89,7 @@ params:
         subtitle: Feugiat Amet Tempus
         title: Risk Return of DJIA Industrial Average
         url: blogs/risk_return
-      - image: pic03.jpg
+      - image: Ziqi-essay.jpg
         subtitle: ZIQI’S BACHELOR DISSERTATION
         title: An Empirical Study of German American Bancorp’s Acquisition of River Valley Bancorp
         url: blogs/magna
@@ -101,10 +101,10 @@ params:
         subtitle: SHOULD I BUY NOW?
         title: A Stock Pitch for LVMH
         url: blogs/ipsum
-      - image: pic06.jpg
-        subtitle: Feugiat Amet Tempus
-        title: Etiam
-        url: blogs/ipsum
+      - image: exchange_photo.jpg
+        subtitle: ZIQI’S TRAVEL BLOGS IN AUSTRALIA
+        title: Manchester on the Road
+        url: https://manchesterontheroad.com/2020/08/13/chapter-three-places-to-visit-in-canberra/
   two:
     buttonText: Get Started
     enable: yes
