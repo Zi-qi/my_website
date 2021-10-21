@@ -66,7 +66,7 @@ params:
      button2:
        - name: Log In
          url: '#'
-    links:
+     links:
       - name: Professional Resume
         url: blogs/CV_Ziqi_Li_copy.pdf
       - name: Dissertation
