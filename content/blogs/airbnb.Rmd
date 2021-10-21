@@ -43,6 +43,483 @@ library(car)
 ```
 
 
+# Introduction
+
+In our final group assignment we are going to analyse data about Airbnb listings and fit a model to predict the total cost for two people staying 4 nights in an AirBnB in a city. We have chosen Amsterdam for our analysis. 
+
+Our AirBnB data come from [insideairbnb.com](http://insideairbnb.com/get-the-data.html){target="_blank"}; it was originally scraped from airbnb.com. 
+
+Below we load the data from Airbnb:
+
+```{r load_data, echo=FALSE, message=FALSE, warning=FALSE, cache=TRUE}
+
+#Load the data
+
+listings <- vroom("http://data.insideairbnb.com/the-netherlands/north-holland/amsterdam/2021-09-07/data/listings.csv.gz") %>% 
+       clean_names()
+
+```
+
+
+# Exploratory Data Analysis (EDA)
+
+
+Let's first get an overview of our data. 
+
+Afterward we will wrangle the data so that we can work with it in our models and plot some of the key relationships. 
+
+## Data overview
+
+We use `glimpse` and `skim` to gain a general view of the data. We have 74 variables and 16,116 observations. Variables include 24 character variables, 5 date variables, 8 logical variables, and 37 numeric variables. We also have some missing values throughout multiple of the variables in our data. 
+
+```{r}
+#Overview of Data
+glimpse(listings)
+skim(listings)
+
+```
+
+
+First out of interest we would like to plot a map of the raw dataset. 
+
+By plotting a cluster map that shows the number of flat listed for rent, we want to visualise the concentration of listings in the area of Amsterdam
+
+```{r}
+#Map the concentration of listing in Amsterdam
+listings %>% 
+  leaflet() %>% 
+  addProviderTiles("OpenStreetMap.Mapnik") %>% 
+  addCircleMarkers(lng = ~longitude, 
+                   lat = ~latitude, 
+                   radius = 1,
+                   fillOpacity = 0.3, 
+                   popup = ~listing_url,
+                   label = ~property_type,
+                   clusterOptions = markerClusterOptions()
+                   )
+```
+
+From this map, we concluded that more properties are available in the central area of Amsterdam. We would like to further investigate the relationship between the price of listings and the locations of properties.
+
+We select some variables for our analysis which we believe would be relevant to determine the impact on prices.
+
+
+We will hypothesize that the following are key variables which will will be using later on 
+
+- `price`: cost per night (variable we will be use to predict)
+- `property_type`: type of accommodation (House, Apartment, etc.)
+- `room_type`:
+
+  - Entire home/apt (guests have entire place to themselves)
+  - Private room (Guests have private room to sleep, all other rooms shared)
+  - Shared room (Guests sleep in room shared with others)
+
+- `number_of_reviews`: Total number of reviews for the listing
+- `review_scores_rating`: Average review score (0 - 100)
+- `neighbourhood*`: three variables on a few major neighbourhoods in each city 
+- `accomodations`: How many people can stay in the room per night
+- `beds`: Number of beds
+- `host_is_superhost`: Whether the host has superhost status
+- `minimum_nights`: Minimum nights to stay in the Airbnb
+- `bedrooms`: Number of bedrooms
+- `reviews_per_month`: Number of reviews per month
+- `availability_30`: Available stays next 30 days
+- `license`: license number
+- `instant_bookable`: Whether the room can be instantly booked
+
+If you are interest in further information is is available [here](https://docs.google.com/spreadsheets/d/1iWCNJcSutYqpULSQHlNyGInUvHg2BoUGoNRIGa6Szc4/edit#gid=982310896)
+
+Let's first filter for our variables of interest
+
+```{r}
+
+#Select the variables for further exploration
+
+listings2 <- listings %>% 
+  
+  select(c("host_since", 
+           "host_is_superhost", 
+           "neighbourhood_cleansed", 
+           "property_type", 
+           "room_type", 
+           "accommodates",
+           "price",
+           "review_scores_rating", 
+           "number_of_reviews",
+           "minimum_nights", 
+           "reviews_per_month",
+           "bedrooms","beds",
+           "availability_30",
+           "last_review",
+           "license",
+           "instant_bookable"))
+
+# We want to choose the "bathrooms" as well, however,this variable has no values
+
+```
+
+## Data wrangling
+
+Now let's ensure we can work with our data. 
+
+First lets briefly look at our new dataset
+
+```{r}
+skim(listings2)
+```
+
+
+We see some issues that we will try and resolve. 
+
+
+### Price
+
+First:
+
+Price is sometimes given as a character string and we would like it to be a double variable. 
+
+Below we change the price to a double, i.e. a numeric variable. 
+
+```{r}
+#Change the 'price' to numeric
+listings2 <- listings2 %>% 
+  mutate(price = parse_number(price))
+
+#Use `typeof(listing2$price)` to confirm that `price` is now stored as a number.
+typeof(listings2$price)
+
+```
+
+
+### Licenses 
+
+We then want to impute the missing value of "license" with logical judgement instead of a license number.
+
+This will make our analysis simply focus on whether people have a license or not. 
+
+```{r}
+#Impute the missing value of “license”
+listings2<-listings2 %>% 
+  
+  #Add yes or no depending on whether variable is missing
+  mutate(license = ifelse(is.na(license), "no","yes"))
+
+
+#Let's check our data by filtering for our license
+License_check <- listings2 %>% 
+  select(license)
+
+
+#Let's take a glimpse at the results.
+glimpse(License_check)
+
+```
+
+The code works as hoped. 
+
+
+### Property types
+
+Next, we look at the variable `property_type`. We use the `count` function to determine how many categories there are and their frequency.
+
+This will be useful later to summarize our property types in larger categories as there will be more observations and less variables in the regression. 
+
+
+```{r}
+#Determine how many categories there are and their frequency
+count_prop <- listings2 %>% 
+  
+  #Select variable of interest - i.e. property types
+  select(property_type) %>% 
+  
+  #Count Number of each property type
+  count(property_type) %>% 
+  
+  #Arrange by most frequent category
+  arrange(desc(n)) %>% 
+  
+  #Create a new column for proportions
+  mutate(percentage=n/sum(n)*100) #Determine the proportion of the total listings the top 4 types make up 
+
+#Print Table
+count_prop
+
+```
+
+
+The top 4 common property types are "Entire rental unit","Private room in rental unit","Entire residential home" and "Entire townhouse". The top 4 types make up 60.66%, 11.48%, 6.48%, and 2.66% of the total listings
+
+
+This will also make it easier for our regressions at a later stage given this is categorical variables.
+
+```{r}
+#Simplify the "property_type" 
+listings2 <- listings2 %>%
+  
+  #Create new names called other for properties not in the top four categories
+  mutate(prop_type_simplified = case_when(
+    
+    #Specifying names to be kept
+    property_type %in% c("Entire rental unit",
+                         "Private room in rental unit", 
+                         "Entire residential home",	
+                         "Entire townhouse") ~ property_type, 
+    
+    #Specifying ot leave remaining in other
+    TRUE ~ "Other"))
+
+#We check the `prop_type_simplified` was correctly made
+listings2 %>%
+  
+  #Count each category
+  count(property_type, prop_type_simplified) %>%
+  
+  #Arrange by largest category
+  arrange(desc(n))    
+
+#Removing the old property type
+listings2 <- subset(listings2, select = -property_type)
+  
+```
+
+
+Our table comes out as expected and we can see that all smaller property types are in the other category. 
+
+```{r}
+#Using above dataset for the confidence interval calculations
+formula_ci <- listings2%>% 
+  group_by(prop_type_simplified) %>% 
+  
+  #Calculate weight's summary statistics for people exercising at least 3 times a week 
+  
+  # calculate mean, SD, count, SE, lower/upper 95% CI
+  summarise(
+    average_price=mean(price,na.rm=TRUE), #Mean, we choose to ignore any missing values by setting the 'na.rm = TRUE'
+            
+    sd_price=sd(price,na.rm=TRUE), #Standard Deviation
+            
+    count= n(), #Observations
+           
+    t_critical = qt(0.975,count-1), #T-Critical at 95% Confidence Interval and these observations
+            
+    se_price=sd_price/sqrt(count), #Standard Error 
+           
+    margin_of_error= t_critical*se_price, #Margin of Error
+            
+    price_low= average_price - margin_of_error, #Lower interval
+            
+    price_high= average_price + margin_of_error) #Upper Interval 
+
+formula_ci
+
+ggplot(formula_ci, aes(x=average_price, y=prop_type_simplified, color=prop_type_simplified)) +
+
+#geom_errorbar function allows us to show the two bars with confidence intervals
+
+geom_errorbar(aes(xmin=price_low, xmax=price_high),width = 0.1, size=0.5)+ 
+  
+geom_point(aes(x=average_price),size=1)+
+
+  
+theme_bw() +
+  
+theme(legend.position = "none",axis.title.y=element_blank())+
+  
+  labs(title = "Confidence interval for average price per property type",
+       subtitle = "95% confidence intervals overlap",
+       x = "Average Price"
+       ) +
+  NULL
+```
+The property type seems to have a significant effect on prices. The length of the intervals mainly vary due to the differences in sample size. The most common property type (Entire rental unit) has a small interval because it has the larger sample. We can estimate quite aaccuratly the average price in this category.
+
+### Neighbourhood
+
+Next, we look at the variable `neighbourhood_cleansed`. We use the `count` function to determine how many categories there are and their frequency. 
+The top 5 common neighbourhoods are "De Baarsjes - Oud-West","De Pijp - Rivierenbuurt","Centrum-West", "Centrum-Oost" and "WesterPark". The top 5 types make up 16.8%, 12.3%, 10.8%, 8.51%%, and 7.48% of the total listings
+
+```{r}
+#Determine how many categories there are and their frequency
+count_prop <- listings2 %>% 
+  
+  #Selecting variable of interest
+  select(neighbourhood_cleansed) %>% 
+  
+  #Counting observations 
+  count(neighbourhood_cleansed) %>% 
+  
+  #Arrange by observations
+  arrange(desc(n)) %>% 
+  
+  #In Percentage
+  mutate(percentage=n/sum(n)*100) #Determine the proportion of the total listings the top 4 types make up 
+
+#Print Table
+count_prop
+
+```
+
+Looking into this we see that there are many more high observation neighbourhoods compared to property types.
+
+Therefore, we believe it makes more sense to split the neighbourhood by their relative prices. 
+
+We do this below
+
+
+```{r}
+#Setting neighbourhood by price
+neighbourhood_group <- listings2 %>% 
+  
+  #Variable of interest
+  group_by(neighbourhood_cleansed) %>% 
+  
+  #Getting median price
+  summarize(price_median = median(price)) %>% 
+  
+  #Arranging by highest price
+  arrange(desc(price_median))
+
+#Print
+neighbourhood_group
+
+
+```
+
+We see that some central neighbourhoods are more expensive, which logically makes sense given this is a large city and that is where tourists and other activities are. 
+
+Let's categorize neighbourhood by price
+
+```{r}
+#Simplify the "property_type" 
+listings2 <- listings2 %>%
+  
+  #Adding new variable names
+  mutate(neighbourhood_cleansed = case_when(
+                                  neighbourhood_cleansed == "Centrum-Oost" ~ "Top 5",
+                                  neighbourhood_cleansed == "Centrum-West" ~ "Top 5",
+                                  neighbourhood_cleansed == "IJburg - Zeeburgereiland" ~ "Top 5",
+                                  neighbourhood_cleansed == "Zuid" ~ "Top 5",
+                                  neighbourhood_cleansed == "De Pijp - Rivierenbuurt" ~ "Top 5",
+                                  neighbourhood_cleansed == "Oud-Noord" ~ "Top 6-10",
+                                  neighbourhood_cleansed == "Watergraafsmeer" ~ "Top 6-10",
+                                  neighbourhood_cleansed == "Oud-Oost" ~ "Top 6-10",
+                                  neighbourhood_cleansed == "Westerpark" ~ "Top 6-10",
+                                  neighbourhood_cleansed == "De Baarsjes - Oud-West" ~ "Top 6-10",
+                                  neighbourhood_cleansed == "Noord-West" ~ "Top 11-15",
+                                  neighbourhood_cleansed == "Noord-Oost" ~ "Top 11-15",
+                                  neighbourhood_cleansed == "Oostelijk Havengebied - Indische Buurt" ~ "Top 11-15",
+                                  neighbourhood_cleansed == "Buitenveldert - Zuidas" ~ "Top 11-15",
+                                  neighbourhood_cleansed == "Bos en Lommer" ~ "Top 11-15",
+                                  neighbourhood_cleansed == "Geuzenveld - Slotermeer" ~ "Remaining",
+                                  neighbourhood_cleansed == "Slotervaart" ~ "Remaining",
+                                  neighbourhood_cleansed == "De Aker - Nieuw Sloten" ~ "Remaining",
+                                  neighbourhood_cleansed == "Osdorp" ~ "Remaining",
+                                  neighbourhood_cleansed == "Gaasperdam - Driemond" ~ "Remaining",
+                                  neighbourhood_cleansed == "Bijlmer-Centrum" ~ "Remaining",
+                                  neighbourhood_cleansed == "Bijlmer-Oost" ~ "Remaining"))
+                                  
+                                
+#Check the `prop_type_simplified` was correctly made
+listings2 %>%
+  
+  #Counting by number of observations
+  count(neighbourhood_cleansed) %>%
+  
+  #Displaying in descending order
+  arrange(desc(n))    
+
+```
+
+
+### Minimum nights
+
+Let's first look into how minimum nights look at Airbnb Amsterdam. 
+
+```{r}
+#Find out the most common values for the variable `minimum_nights`
+listings2 %>%
+  
+  #Count Observations
+  count(minimum_nights) %>%
+  
+  #Arrange by observations
+  arrange(desc(n))
+
+```
+
+
+By looking into the vairable `minimum_nights`, we found out that airbnb most commonly required people to stay for at least 2 nights. The majority of users tend to spend less than a week, which indicates that Airbnb is most commonly used for travel purposes, i.e., as an alternative to traditional hotels.. 
+
+There are also some variables that stand out i.e. minimum nights of 1,100 days (3 years minimum rent). These individuals are probably looking for long term renters.
+
+We only want to include listings in our regression analysis that are intended for travel purposes, i.e. no more than 4 days.
+
+```{r}
+#Filter the Airbnb data so that it only includes observations with `minimum_nights <= 4`
+listings2 <- listings2 %>% 
+  filter(minimum_nights <= 4)
+
+```
+
+
+### Dropping NA's 
+
+We then skim the dataset to see if further data wrangling is required.
+
+```{r}
+skim(listings2)
+```
+
+As we can see, review_scores_rating, reviews_per_month, host_is_superhost, bedrooms and beds still have missing values. We will drop unreviewed units for now and as these units will likely be less accurate in terms of price / review ratings. Similarly for bedrooms and beds, we drop missing values.
+
+```{r}
+#Dropping values
+
+listings2 <-  listings2 %>% 
+  
+  #Choosing which variables to drop NAs from
+  drop_na(bedrooms,beds,host_is_superhost,review_scores_rating,reviews_per_month)
+
+#Skimming to confirm code works as intended. 
+skim(listings2)
+```
+
+### Dropping Rating 0 
+
+We also know that ratings on Airbnb are 1-5, therefore there must be an issue with reviews that are 0 out of 5. 
+
+Let's remove these from our data
+
+```{r}
+
+#Dropping reviews at 0
+listings2 <- listings2 %>% 
+  filter(review_scores_rating > 0)
+
+```
+
+
+### Final skim of data
+
+Let's take a final skim of the data
+
+```{r}
+skim(listings2)
+```
+
+
+
+We now have wrangled our data sufficiently and have:
+- 4 character variables ready for analysis with not too many categories.
+- 2 Date variables with no missing values
+- 2 Logical variables with no missing variables
+- 9 range of numeric variables with no missing values. 
+
+
+We also have 11.4 thousand observations. 
+
+We will now explore how these variables affect price.
+
 ## Visualisations
 By visualising the relationship between price and the variables that we believe will affect the price substantially, we hope to identify a noticeable correlation between price and each of those variables and use statistical modelling to further investigate their relationships and provide possible explanation.
 
@@ -1026,17 +1503,3 @@ From the above we see that for price the most correlated variables is the number
 It is worth noting that some of the less correlated variables seem to be review scores, number of reviews, however, we will still try and test these in our regression. 
 
 Unfortunately, GGPairs does not work well with categorical variables and we will use that data we extracted above as an indicator for whether or not these variables will be useful going forward.
-`
-
-# Acknowledgements
-
-- The data for this project is from [insideairbnb.com](insideairbnb.com)
-
-
-
-# Authors
-
-Karim El Asmar, Stepan Emelianenko, Nelly Gray, Ziqi Li, Ray Park, Shirley Wan, Ditlev Meulengracht
-
-
-
