@@ -6,6 +6,7 @@ googleAnalytics: ''
 disqusShortname: ''
 params:
   banner:
+  image: Ziqi's background photo.jpg
     buttonText: Get Started
     subtitle: |-
       A DOER WHO ASPIRES TO SHINE IN THE FINANCE WORLD
@@ -93,13 +94,13 @@ params:
         subtitle: ZIQI’S BACHELOR DISSERTATION
         title: An Empirical Study of German American Bancorp’s Acquisition of River Valley Bancorp
         url: blogs/magna
-      - image: exchange_photo.jpg
-        subtitle: ZIQI’S TRAVEL BLOGS IN AUSTRALIA
-        title: Manchester on the Road
-        url: blogs/ipsum
-      - image: pic05.jpg
+#      - image: exchange_photo.jpg
+ #       subtitle: ZIQI’S TRAVEL BLOGS IN AUSTRALIA
+  #      title: Manchester on the Road
+   #     url: blogs/ipsum
+      - image: burberry.jpg
         subtitle: SHOULD I BUY NOW?
-        title: A Stock Pitch for LVMH
+        title: A Stock Pitch for Burberry
         url: blogs/ipsum
       - image: exchange_photo.jpg
         subtitle: ZIQI’S TRAVEL JOURNAL IN AUSTRALIA
