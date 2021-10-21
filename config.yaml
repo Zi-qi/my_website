@@ -60,11 +60,11 @@ params:
   image: Ziqi_background_photo.jpg
   name: Ziqi Li
   navigation:
-   #  button1:
-   #    - name: Get Started
-     #    url: blogs
-   #  button2:
-    #   - name: Log In
+     button1:
+       - name: Get Started
+         url: blogs
+     button2:
+       - name: Log In
         url: '#'
     links:
       - name: Professional Resume
