@@ -42,7 +42,6 @@ library(vroom)
 library(car)
 ```
 
-
 # Introduction
 
 In our final group assignment we are going to analyse data about Airbnb listings and fit a model to predict the total cost for two people staying 4 nights in an AirBnB in a city. We have chosen Amsterdam for our analysis. 
@@ -1503,3 +1502,13 @@ From the above we see that for price the most correlated variables is the number
 It is worth noting that some of the less correlated variables seem to be review scores, number of reviews, however, we will still try and test these in our regression. 
 
 Unfortunately, GGPairs does not work well with categorical variables and we will use that data we extracted above as an indicator for whether or not these variables will be useful going forward.
+
+# Acknowledgements
+
+- The data for this project is from [insideairbnb.com](insideairbnb.com)
+
+
+
+# Authors
+
+Karim El Asmar, Stepan Emelianenko, Nelly Gray, Ziqi Li, Ray Park, Shirley Wan, Ditlev Meulengracht
