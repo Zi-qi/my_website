@@ -67,14 +67,18 @@ params:
       - name: Log In
         url: '#'
     links:
-      - name: Home
-        url: '#'
-      - name: Blogs
-        url: blogs
-      - name: Generic Blog
+      - name: Professional Resume
+        url: blogs/CV_Ziqi_Li_copy.pdf
+      - name: Dissertation
+        url: blogs/magna
+      - name: Case Study
+        url: blogs/airbnb
+      - name: Stock Analysis
+        url: blogs/risk_return
+      - name: Stock Pitch
         url: blogs/ipsum
-      - name: Elements
-        url: elements.html
+      - name: Travel Blogs
+        url: https://manchesterontheroad.com/2020/08/13/chapter-three-places-to-visit-in-canberra/
     menu: Menu
     subtitle: LBS MFA2022
     title: Ziqi Li
