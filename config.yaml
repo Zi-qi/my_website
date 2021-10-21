@@ -96,7 +96,7 @@ params:
       - image: airbnb.jpg
         subtitle: WHAT FACTORS AFFECT YOUR COST OF STAY?
         title: Price modelling for Airbnb in Amsterdam
-        url: blogs/airbnb
+        url: blogs/airbnb.html
       - image: stock_photo.jpg
         subtitle: STOCK ANALYSIS FOR DJIA
         title: Risk Return of DJIA Industrial Average
