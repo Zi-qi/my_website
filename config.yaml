@@ -57,7 +57,7 @@ params:
       - icon: fa-linkedin
         label: LinkedIn
         url: https://www.linkedin.com/in/ziqi-li-0b7012173/
-  image: Ziqi's background photo.jpg
+  image: Ziqi_background_photo.jpg
   name: Ziqi Li
   navigation:
     button1:
