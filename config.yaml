@@ -85,10 +85,6 @@ params:
         subtitle: PROFESSIONAL RESUME
         title: Ziqi's CV
         url: blogs/CV_Ziqi_Li_copy.pdf
-      - image: stock_photo.jpg
-        subtitle: STOCK ANALYSIS FOR DJIA
-        title: Risk Return of DJIA Industrial Average
-        url: blogs/risk_return
       - image: Ziqi-essay.jpg
         subtitle: ZIQI’S BACHELOR DISSERTATION
         title: An Empirical Study of German American Bancorp’s Acquisition of River Valley Bancorp
@@ -97,6 +93,10 @@ params:
         subtitle: WHAT FACTORS AFFECT YOUR COST OF STAY?
         title: Price modelling for Airbnb in Amsterdam
         url: blogs/airbnb
+      - image: stock_photo.jpg
+        subtitle: STOCK ANALYSIS FOR DJIA
+        title: Risk Return of DJIA Industrial Average
+        url: blogs/risk_return
       - image: burberry.jpg
         subtitle: SHOULD I BUY NOW?
         title: A Stock Pitch for Burberry
