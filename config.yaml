@@ -104,7 +104,7 @@ params:
       - image: burberry.jpg
         subtitle: SHOULD I BUY NOW?
         title: A Stock Pitch for Burberry
-        url: blogs/ipsum
+        url: blogs/stock_pitch.pdf
       - image: exchange_photo.jpg
         subtitle: ZIQI’S TRAVEL JOURNAL IN AUSTRALIA
         title: Manchester on the Road
